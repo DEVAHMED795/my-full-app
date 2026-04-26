@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const API_URL = "https://your-render-backend.onrender.com"; // ⚠️ CHANGE THIS
+const API_URL = "https://my-full-app-1.onrender.com"; 
 
 function App() {
   const [name, setName] = useState("");
