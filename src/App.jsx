@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+const API_URL = "https://my-full-app-1.onrender.com";
 
 function App() {
   const [name, setName] = useState("");
@@ -8,7 +9,7 @@ function App() {
 
   // Fetch messages from backend when component loads
   const fetchMessages = async () => {
-    const res = await fetch("/api/messages");
+    const res = await fetch(`${API_URL}/api/messages`);
     const data = await res.json();
     setMessages(data);
   };
@@ -17,24 +18,25 @@ function App() {
   useEffect(() => {
     fetchMessages();
   }, []);
+
   const handleDelete = async (id) => {
-  const res = await fetch(`/api/messages/${id}`, {
-    method: "DELETE",
-  });
-  const data = await res.json();
-  if (data.success) {
-    setMessages(messages.filter((m) => m.id !== id));
-    setResponse("Deleted!");
-    setTimeout(() => setResponse(""), 2000);
-  } else {
-    setResponse("Delete failed");
-  }
-};
+    const res = await fetch(`${API_URL}/api/messages/${id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json();
+    if (data.success) {
+      setMessages(messages.filter((m) => m.id !== id));
+      setResponse("Deleted!");
+      setTimeout(() => setResponse(""), 2000);
+    } else {
+      setResponse("Delete failed");
+    }
+  };
 
   // Handle form submit (send new message)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/data", {
+    const res = await fetch(`${API_URL}/api/data`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, message: msg }),
@@ -81,17 +83,17 @@ function App() {
         <p>No messages yet. Send one!</p>
       ) : (
         messages.map((m) => (
-  <div key={m.id} style={{ border: "1px solid #ccc", margin: "10px auto", padding: "10px", width: "300px", textAlign: "left" }}>
-    <strong>{m.name}</strong> <small>({m.created_at})</small>
-    <p>{m.message}</p>
-    <button 
-      onClick={() => handleDelete(m.id)} 
-      style={{ backgroundColor: "#ff4444", color: "white", border: "none", padding: "5px 10px", cursor: "pointer" }}
-    >
-      Delete
-    </button>
-  </div>
-))
+          <div key={m.id} style={{ border: "1px solid #ccc", margin: "10px auto", padding: "10px", width: "300px", textAlign: "left" }}>
+            <strong>{m.name}</strong> <small>({m.created_at})</small>
+            <p>{m.message}</p>
+            <button 
+              onClick={() => handleDelete(m.id)} 
+              style={{ backgroundColor: "#ff4444", color: "white", border: "none", padding: "5px 10px", cursor: "pointer" }}
+            >
+              Delete
+            </button>
+          </div>
+        ))
       )}
     </div>
   );
