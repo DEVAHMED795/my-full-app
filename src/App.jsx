@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>React + Backend + SQLite</h1>
+      <h1> AHMED MADE HIS FIRST LIVE APP </h1>
 
       {/* Form to send new message */}
       <form onSubmit={handleSubmit}>
